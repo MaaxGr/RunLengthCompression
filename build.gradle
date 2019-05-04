@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+group 'de.maaxgr.studium.swe1'
+version '1.0'
+
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
+
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'de.maaxgr.studium.swe1.runlengthcompression.Main'
+        attributes 'Implementation-Version': version
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

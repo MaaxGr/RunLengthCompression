@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-public class SequenceToStringConverterTest {
+public class CompressSequenceConverterTest {
 
     @Test
     public void test() {

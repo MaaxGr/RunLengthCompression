@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 public class AsciiUtilTest {
 
     @Test
-    public void numberToAsciiCharacter() {
+    public void asciiTest() {
         Map<Integer, Character> mapping = new HashMap<>() {{
             put(2, ' ');
             put(3, '!');
@@ -18,21 +18,14 @@ public class AsciiUtilTest {
 
         mapping.forEach((number, character) -> {
             System.out.printf("Testing number %d => Should be ascii-char '%s'%n", number, character);
-            assertEquals((char) character, AsciiUtil.getAsciiCharForNumber(number));
-        });
-    }
+            char convertedChar = AsciiUtil.getAsciiCharForNumber(number);
+            assertEquals((char) character, convertedChar);
 
-    @Test
-    public void asciiCharacterToNumber() {
-        Map<Character, Integer> mapping = new HashMap<>() {{
-            put(' ', 2);
-            put('!', 3);
-            put('}', 95);
-        }};
+            System.out.printf("Converting '%s' back to number%n", convertedChar);
+            int convertedNumber = AsciiUtil.getNumberForAsciiChar(convertedChar);
+            assertEquals((int) number, convertedNumber);
 
-        mapping.forEach((character, number) -> {
-            System.out.printf("Testing character '%s' => Should be number '%d'%n", character, number);
-            assertEquals((int) number, AsciiUtil.getNumberForAsciiChar(character));
+            System.out.println();
         });
     }
 

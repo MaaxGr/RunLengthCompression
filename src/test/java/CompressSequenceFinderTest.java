@@ -12,8 +12,6 @@ public class CompressSequenceFinderTest {
             System.out.println("V3: " + CompressSequenceFinder.getAll3(testString));
             System.out.println();
         }
-
-
     }
 
 }

@@ -1,40 +1,33 @@
 package de.maaxgr.studium.swe1.runlengthcompression.manager;
 
-import de.maaxgr.studium.swe1.runlengthcompression.util.AsciiUtil;
+import de.maaxgr.studium.swe1.runlengthcompression.entity.DecompressSequence;
+import de.maaxgr.studium.swe1.runlengthcompression.util.DecompressSequenceConverter;
+import de.maaxgr.studium.swe1.runlengthcompression.util.DecompressSequenceFinder;
+
+import java.util.List;
 
 public class RunLengthDecompressor {
 
     public String run(String input) {
-        final StringBuilder finalString = new StringBuilder();
+        final List<DecompressSequence> sequences = DecompressSequenceFinder.findAll(input);
 
-        Character right = null;
-        Character rightright = null;
+        final StringBuilder builder = new StringBuilder();
 
-        for (int i = 0; i < input.toCharArray().length - 2; i++) {
-            char current = input.charAt(i);
+        int startIndex = 0;
 
-            right = input.charAt(i + 1);
-            rightright = input.charAt(i + 2);
+        for (DecompressSequence sequence : sequences) {
+            final String beforeSequence = input.substring(startIndex, sequence.getStartIndex());
+            builder.append(beforeSequence);
 
-            if (current == '~' && right != '~') {
-                finalString.append(
-                        decompressSequence(right, rightright)
-                );
-                i = i + 2;
-            } else {
-                finalString.append(current);
-            }
+            final String decompressedSequence = DecompressSequenceConverter.convert(sequence);
+            builder.append(decompressedSequence);
+
+            startIndex = sequence.getStartIndex() + (sequence.isDoubleTilde() ? 2 : 3);
         }
 
-        finalString.append(right).append(rightright);
+        final String rest = input.substring(startIndex);
+        builder.append(rest);
 
-        String decompressedString = finalString.toString();
-        decompressedString = decompressedString.replace("~~", "~");
-
-        return decompressedString;
-    }
-
-    private String decompressSequence(char lengthChar, char targetChar) {
-        return String.valueOf(targetChar).repeat(AsciiUtil.getNumberForAsciiChar(lengthChar) - 1);
+        return builder.toString();
     }
 }

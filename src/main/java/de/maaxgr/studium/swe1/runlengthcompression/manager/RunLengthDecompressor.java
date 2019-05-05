@@ -31,3 +31,4 @@ public class RunLengthDecompressor {
         return builder.toString();
     }
 }
+
